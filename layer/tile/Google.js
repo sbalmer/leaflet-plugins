@@ -104,7 +104,7 @@ L.Google = L.Class.extend({
 	_initMapObject: function() {
 		if (!this._ready) return;
 		this._google_center = new google.maps.LatLng(0, 0);
-		var map = new google.maps.Map(this._container, {
+		var map_options = {
 		    center: this._google_center,
 		    zoom: 0,
 		    tilt: 0,
@@ -115,7 +115,13 @@ L.Google = L.Class.extend({
 		    disableDoubleClickZoom: true,
 		    scrollwheel: false,
 		    streetViewControl: false
-		});
+		};
+        
+		if (this.options.styles) {
+			map_options.styles = this.options.styles;
+		}
+		
+		var map = new google.maps.Map(this._container, map_options);
 
 		var _this = this;
 		this._reposition = google.maps.event.addListenerOnce(map, "center_changed",
